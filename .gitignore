@@ -1,0 +1,5 @@
+*.ttf
+export/
+venv/
+.idea/
+.vscode/

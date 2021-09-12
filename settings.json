@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "GoogleFontAPI_key": "",
+  "settings": {
+    "base_image": "./sudokuGrid.jpg",
+    "nb_exports": 200,
+    "start_index": 0,
+    "difficulty_mode": "Medium",
+    "rotate": {
+      "auto_rotate": true,
+      "minRotate": -30,
+      "maxRotate": 30
+    },
+    "noise": false
+  }
+}
