@@ -1,6 +1,6 @@
 # SudokuPictureGenerator
 ## Generate procedural pictures for OCR Neural Network
-![sudoku_4](https://user-images.githubusercontent.com/14821642/132983241-b53ae065-b162-4b34-b256-e31a0db0ada8.jpg)
+![sudoku_4](https://user-images.githubusercontent.com/14821642/132985699-b047670d-e450-4314-961e-2464aa77499c.gif)
 
 Warning : Exported Sudoku might not be resolvable
 ## Installation
