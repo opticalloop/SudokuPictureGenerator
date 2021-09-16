@@ -1,6 +1,7 @@
 import os
 import random
 
+from src.Digit import Digit
 from src.Font import Fonts
 from PIL import Image
 import json
@@ -13,7 +14,7 @@ class Generator:
     def __init__(self) -> None:
         super().__init__()
         self._index = 0
-        self._sudoku_results = ""
+        self.export_results = ""
         self._image: Image = None
         self._number_of_tests = 0
         self.__load_settings()
@@ -35,6 +36,10 @@ class Generator:
             for i in range(self._number_of_tests):
                 self.__progressBar()
                 self.__generateHard()
+        elif self._mode == "Digits-Only":
+            for i in range(self._number_of_tests):
+                self.__progressBar()
+                self.__generate_digits()
 
         print(f"Exported {self._number_of_tests} pictures in the export folder")
 
@@ -58,7 +63,8 @@ class Generator:
         """
         Save File in ./export/sudoku_answers.txt
         """
-        open(f"./export/{self._mode}/sudoku_answers.txt", "w").write(self._sudoku_results)
+        if self._mode != "Digits-Only":
+            open(f"./export/{self._mode}/sudoku_answers.txt", "w").write(self.export_results)
 
     def __load_settings(self):
         """
@@ -68,8 +74,7 @@ class Generator:
             var = json.load(outfile)
         if var["version"] != "1.0.0":
             raise Exception("File version is not corresponding. Check "
-                            "https://github.com/opticalloop/SudokuPictureGenerator/blob/main/settings.json for any "
-                            "update.")
+                            "https://github.com/opticalloop/SudokuPictureGenerator/blob/main/settings.json for any update.")
         if not var["GoogleFontAPI_key"]:
             raise Exception("GoogleFontAPI_key cannot be empty")
         self._fonts = Fonts(var["GoogleFontAPI_key"])
@@ -79,8 +84,8 @@ class Generator:
         self._image = Image.open(var["base_image"])
         self._index = var["start_index"]
         self._number_of_tests = var["nb_exports"]
-        if var["difficulty_mode"] not in ("Easy", "Medium", "Hard"):
-            raise Exception("Difficulty mode is not valid. Should be Easy | Medium | Hard")
+        if var["difficulty_mode"] not in ("Easy", "Medium", "Hard", "Digits-Only"):
+            raise Exception("Difficulty mode is not valid. Should be Easy | Medium | Hard | Digits-Only")
         self._mode = var["difficulty_mode"]
 
         try:
@@ -98,20 +103,20 @@ class Generator:
             print("Noise is not available right now.")
 
     def __generateEasy(self):
-        sudoku = Sudoku(self._image.copy(), self._fonts.get_random_font(),"Easy")
+        sudoku = Sudoku(self._image.copy(), self._fonts.get_random_font(), "Easy")
         sudoku.place_cases(random.randint(4, 30))
         sudoku.rotate_img()
         sudoku.save(self._index)
-        self._sudoku_results += sudoku.export_string(self._index)
+        self.export_results += sudoku.export_string(self._index)
         self._index += 1
 
     def __generateMedium(self):
-        sudoku = Sudoku(self._image.copy(), self._fonts.get_random_font(),"Medium")
+        sudoku = Sudoku(self._image.copy(), self._fonts.get_random_font(), "Medium")
         sudoku.place_cases(random.randint(4, 30))
         sudoku.rotate_img()
         sudoku.transform_img()
         sudoku.save(self._index)
-        self._sudoku_results += sudoku.export_string(self._index)
+        self.export_results += sudoku.export_string(self._index)
         self._index += 1
 
     def __generateHard(self):
@@ -120,5 +125,11 @@ class Generator:
         sudoku.rotate_img()
         sudoku.transform_img()
         sudoku.save(self._index)
-        self._sudoku_results += sudoku.export_string(self._index)
+        self.export_results += sudoku.export_string(self._index)
+        self._index += 1
+
+    def __generate_digits(self):
+        digit = Digit(self._fonts.get_random_font())
+        digit.place_case()
+        digit.save(self._index)
         self._index += 1

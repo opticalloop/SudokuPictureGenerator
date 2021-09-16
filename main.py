@@ -1,4 +1,5 @@
 import os
+import sys
 import shutil
 from src.Generator import Generator
 
@@ -17,8 +18,12 @@ def create_directories():
 if __name__ == "__main__":
     create_directories()
 
+
     generator = Generator()
+
     generator.generate()
+
+
     generator.save_results()
 
     shutil.rmtree("export/fonts") # remove tmp fonts

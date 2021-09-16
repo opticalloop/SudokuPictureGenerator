@@ -2,7 +2,7 @@
 ## Generate procedural pictures for OCR Neural Network
 ![sudoku_4](https://user-images.githubusercontent.com/14821642/132985699-b047670d-e450-4314-961e-2464aa77499c.gif)
 
-Warning : Exported Sudoku might not be resolvable
+### Warning : Exported Sudoku might not be resolvable
 ## Installation
 
 Install all the dependencies using `requirements.txt`
@@ -12,7 +12,7 @@ Install all the dependencies using `requirements.txt`
 
 You'll need to get you own Google Font API Key. 
 [Check this link](https://developers.google.com/fonts/docs/developer_api) 
-for more information
+for more information.
 
 ## How it works
 SudokuPictureGenerator use random fonts from Google Fonts API (near 4000 fonts are available) 
@@ -24,7 +24,7 @@ Run
  $  ./main.py
 ```
 
-Exported pictures will be saved into the `./export/{Easy|Medium|Hard}` folder with a file `sudoku.answers.txt` containing all the values 
+Exported pictures will be saved into the `./export/{Easy|Medium|Hard|Digits-Only}` folder with a file `sudoku.answers.txt` containing all the values 
 and theirs positions of all pictures.
 File format :
 
@@ -68,6 +68,9 @@ Edit [settings.json](/settings.json) to change program settings :
 >*  Including Mode Medium parameters
 > 
 >* ####  Will include noise and others picture degradation
+
+### Digits-Only
+>* Only generate 28x28 jpg image containg one digit (from 1 to 9)
 ## Case positions
 >### Here the position XY of all cases:
 >![image](https://user-images.githubusercontent.com/14821642/132983889-ca2988d0-0b6d-4dec-ad21-368690ce9ae0.png)

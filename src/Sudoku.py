@@ -9,6 +9,8 @@ from src.Font import Font
 from src.Rotate import Rotate
 
 
+
+
 class Sudoku:
     def __init__(self, image: Image, font: Font, difficulty) -> None:
         super().__init__()
@@ -49,11 +51,12 @@ class Sudoku:
             self._img = self._img.rotate(random.randint(Rotate.min, Rotate.max), fillcolor="#fff")
 
     def add_filters(self):
+        na = np.array(YourPILImage)
         self._img.effect_noise((5, 5))
 
     def transform_img(self):
         width, height = self._img.size
-        m = random.uniform(-0.3, 0.3)
+        m = random.uniform(0, 0.3)
         xshift = abs(m) * width
         new_width = width + int(round(xshift))
         self._img = self._img.transform((new_width, height), Image.AFFINE,
