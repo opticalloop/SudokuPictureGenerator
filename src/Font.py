@@ -22,11 +22,12 @@ class Fonts:
         if not r.ok:
             raise Exception("Cannot establish connection to Google Fonts API. Check your internet connection or the validity of your API Key.")
 
-        self._fonts = list()
+        self.fonts = list()
         for item in r.json()["items"]:
             for font_name, font_link in item["files"].items():
-                self._fonts.append(Font(item["family"] + font_name, font_link))
-        print(f"Imported {len(self._fonts)} fonts.")
+                self.fonts.append(Font(item["family"] + font_name, font_link))
+        print(f"Imported {len(self.fonts)} fonts.")
 
     def get_random_font(self) -> Font:
-        return random.choice(self._fonts)
+        return random.choice(self.fonts)
+

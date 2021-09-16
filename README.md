@@ -43,7 +43,7 @@ Edit [settings.json](/settings.json) to change program settings :
       "GoogleFontAPI_key": "yourAPIKey" // change this value by your own Google Font API Key
       "settings": {
         "base_image": "./sudokuGrid.jpg", // sudoku grid base path
-        "nb_exports": 10, // number of sudoku you want
+        "nb_exports": 10, // number of sudoku you want (specify -1 if you want the number of fonts availible)
         "start_index": 0, // index for filename
         "difficulty_mode": "Easy", // difficulty mode
         "rotate": {

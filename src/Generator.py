@@ -3,7 +3,7 @@ import random
 
 from src.Digit import Digit
 from src.Font import Fonts
-from PIL import Image
+from PIL import Image, ImageFont
 import json
 
 from src.Rotate import Rotate
@@ -23,7 +23,7 @@ class Generator:
         """
         Generate the number of pictures specified in the settings.json
         """
-        print(f"Generating {self._number_of_tests} ({self._mode}) pictures")
+        print(f"Generating {self._number_of_tests * (9 if self._mode == 'Digits-Only' else 1)} ({self._mode}) pictures")
         if self._mode == "Easy":
             for i in range(self._number_of_tests):
                 self.__progressBar()
@@ -55,7 +55,7 @@ class Generator:
         done_str = '█' * int(done)
         togo_str = '░' * int(togo)
 
-        print(f'\t⏳\t{title}: [{done_str}{togo_str}] {percent_done}% done', end='\r')
+        print(f'\t⏳\t{title}: [{done_str}{togo_str}] {percent_done}% done (n°{self._index})', end='\r')
         if round(percent_done) == 100:
             print('\t✅')
 
@@ -84,6 +84,8 @@ class Generator:
         self._image = Image.open(var["base_image"])
         self._index = var["start_index"]
         self._number_of_tests = var["nb_exports"]
+        if self._number_of_tests < 0:
+            self._number_of_tests = len(self._fonts.fonts)
         if var["difficulty_mode"] not in ("Easy", "Medium", "Hard", "Digits-Only"):
             raise Exception("Difficulty mode is not valid. Should be Easy | Medium | Hard | Digits-Only")
         self._mode = var["difficulty_mode"]
@@ -129,7 +131,13 @@ class Generator:
         self._index += 1
 
     def __generate_digits(self):
-        digit = Digit(self._fonts.get_random_font())
-        digit.place_case()
-        digit.save(self._index)
+        font = self._fonts.fonts[self._index]
+
+        font.download()
+        fontType = ImageFont.truetype(f'export/fonts/{font.name}.ttf', 20)
+
+        for i in range(1, 10):
+            digit = Digit(i, fontType)
+            digit.place_case()
+            digit.save(self._index)
         self._index += 1
