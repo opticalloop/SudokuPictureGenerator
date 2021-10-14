@@ -1,7 +1,8 @@
 import os
 import random
+import time
 
-from src.Digit import Digit
+from src.Digit import Digit, Digits, Limit_Stack
 from src.Font import Fonts
 from PIL import Image, ImageFont
 import json
@@ -37,9 +38,17 @@ class Generator:
                 self.__progressBar()
                 self.__generateHard()
         elif self._mode == "Digits-Only":
+            threads = []
             for i in range(self._number_of_tests):
-                self.__progressBar()
-                self.__generate_digits()
+                while Limit_Stack.limit < 1:
+                    time.sleep(0.01)
+                Limit_Stack.limit -= 1
+                x = Digits(self._fonts.fonts[self._index], self._index)
+                x.start()
+                threads.append(x)
+                self._index += 1
+            for x in threads:
+                x.join()
 
         print(f"Exported {self._number_of_tests} pictures in the export folder")
 
