@@ -16,7 +16,7 @@ class Limit_Stack:
 
 
 class Digit:
-    def __init__(self, value: int, font: FreeTypeFont) -> None:
+    def __init__(self, value, font: FreeTypeFont) -> None:
         super().__init__()
         self._value = value
         self._img = Image.new(mode="L", size=(28, 28), color="#fff")  # 8-bit pixels, black and white
@@ -43,15 +43,16 @@ class Digit:
 
 
 class Digits(threading.Thread):
-    def __init__(self, font: Font, index: int):
+    def __init__(self, font: Font, index: int,characters: list):
         self._font = font
         self._index = index
+        self._characters = characters
         super().__init__()
 
     def run(self) -> None:
         self._font.download()
         font_type = ImageFont.truetype(f'export/fonts/{self._font.name}.ttf', 20)
-        for i in range(1, 10):
+        for i in self._characters:
             digit = Digit(i, font_type)
             digit.place_case()
             digit.save(self._index)

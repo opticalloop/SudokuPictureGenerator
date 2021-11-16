@@ -43,7 +43,7 @@ class Generator:
                 while Limit_Stack.limit < 1:
                     time.sleep(0.01)
                 Limit_Stack.limit -= 1
-                x = Digits(self._fonts.fonts[self._index], self._index)
+                x = Digits(self._fonts.fonts[self._index], self._index,self.characters)
                 x.start()
                 threads.append(x)
                 self._index += 1
