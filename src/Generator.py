@@ -93,6 +93,7 @@ class Generator:
         self._image = Image.open(var["base_image"])
         self._index = var["start_index"]
         self._number_of_tests = var["nb_exports"]
+        self.characters = var["characters"]
         if self._number_of_tests < 0:
             self._number_of_tests = len(self._fonts.fonts)
         if var["difficulty_mode"] not in ("Easy", "Medium", "Hard", "Digits-Only"):
@@ -114,7 +115,7 @@ class Generator:
             print("Noise is not available right now.")
 
     def __generateEasy(self):
-        sudoku = Sudoku(self._image.copy(), self._fonts.get_random_font(), "Easy")
+        sudoku = Sudoku(self._image.copy(), self._fonts.get_random_font(), "Easy", self.characters)
         sudoku.place_cases(random.randint(4, 30))
         sudoku.rotate_img()
         sudoku.save(self._index)
@@ -122,7 +123,7 @@ class Generator:
         self._index += 1
 
     def __generateMedium(self):
-        sudoku = Sudoku(self._image.copy(), self._fonts.get_random_font(), "Medium")
+        sudoku = Sudoku(self._image.copy(), self._fonts.get_random_font(), "Medium", self.characters)
         sudoku.place_cases(random.randint(4, 30))
         sudoku.rotate_img()
         sudoku.transform_img()
@@ -131,7 +132,7 @@ class Generator:
         self._index += 1
 
     def __generateHard(self):
-        sudoku = Sudoku(self._image.copy(), self._fonts.get_random_font(), "Hard")
+        sudoku = Sudoku(self._image.copy(), self._fonts.get_random_font(), "Hard", self.characters)
         sudoku.place_cases(random.randint(4, 30))
         sudoku.rotate_img()
         sudoku.transform_img()
@@ -145,7 +146,7 @@ class Generator:
         font.download()
         fontType = ImageFont.truetype(f'export/fonts/{font.name}.ttf', 20)
 
-        for i in range(1, 10):
+        for i in self.characters:
             digit = Digit(i, fontType)
             digit.place_case()
             digit.save(self._index)

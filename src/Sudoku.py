@@ -12,7 +12,7 @@ from src.Rotate import Rotate
 
 
 class Sudoku:
-    def __init__(self, image: Image, font: Font, difficulty) -> None:
+    def __init__(self, image: Image, font: Font, difficulty, characters) -> None:
         super().__init__()
         self._img = image
         self._image_editable = ImageDraw.Draw(image)
@@ -23,6 +23,7 @@ class Sudoku:
         self._numbers_positions = list()
         self._string = ""
         self._mode = difficulty
+        self.characters = characters
 
     def __place_case(self):
         while True:
@@ -30,7 +31,7 @@ class Sudoku:
             if (x, y) not in self._numbers_positions:
                 self._numbers_positions.append((x, y))
                 break
-        value = random.randint(1, 9)
+        value = random.choice(self.characters)
         self._image_editable.text((150 + 80 * (x + 0.3), 128 + 80 * (y + 0.2)), str(value), 0,
                                   font=self._font)
         self._string += f"({x},{y},{value})"

@@ -51,7 +51,8 @@ Edit [settings.json](/settings.json) to change program settings :
           "minRotate": -30, 
           "maxRotate": 30
         },
-        "noise": false // add random noise to picture (does not work in 1.0.0)
+        "noise": false, // add random noise to picture (does not work in 1.0.0)
+        "characters":["1", "2", "3", "4", "5", "6", "7", "8", "9"] // witch characters you want to use
       }
     }
 ```
