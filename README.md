@@ -16,7 +16,7 @@ for more information.
 
 ## How it works
 SudokuPictureGenerator use random fonts from Google Fonts API (near 4000 fonts are available) 
-to generate random patterns of sudoku grid.
+to generate random patterns of sudoku grid or single characters pictures.
 
 
 Run 
